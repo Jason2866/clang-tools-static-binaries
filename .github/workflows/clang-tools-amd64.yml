@@ -124,7 +124,17 @@ jobs:
       if: ${{ matrix.clang-version >= 9 || matrix.clang-version == '12.0.1' }}
       shell: bash
       run: |
-        tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz $EXTRA_EXCLUDES ${{ matrix.extra-tar-args }}
+        if [[ "${{ matrix.os }}" == "windows" ]]; then
+          # Windows: tar cannot create dangling symlinks (symlink target not yet extracted).
+          # Fix: enable winsymlinks via MSYS env var and run tar twice so that on the
+          # second pass all symlink targets already exist.
+          export MSYS=winsymlinks:lnk
+          tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }} || true
+          tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }} || true
+        else
+          tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }}
+        fi
+
     - name: patch clang-3.9 constify operator
       if: ${{ matrix.clang-version == 3.9 && matrix.os == 'windows' }}
       shell: bash
