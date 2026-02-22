@@ -132,7 +132,7 @@ jobs:
           tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }} || true
           tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }} || true
         else
-          tar --ignore-failed-read -xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }}
+          tar xf ${{ matrix.release }}.tar.xz ${{ matrix.extra-tar-args }}
         fi
 
     - name: patch clang-3.9 constify operator
