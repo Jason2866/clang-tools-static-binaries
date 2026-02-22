@@ -124,10 +124,6 @@ jobs:
       if: ${{ matrix.clang-version >= 9 || matrix.clang-version == '12.0.1' }}
       shell: bash
       run: |
-        EXTRA_EXCLUDES=""
-        if [[ "${{ matrix.clang-version }}" == "21" ]]; then
-          EXTRA_EXCLUDES="--exclude=${RELEASE}/llvm/utils/mlgo-utils/**"
-        fi
         tar xf ${{ matrix.release }}.tar.xz $EXTRA_EXCLUDES ${{ matrix.extra-tar-args }}
     - name: patch clang-3.9 constify operator
       if: ${{ matrix.clang-version == 3.9 && matrix.os == 'windows' }}
