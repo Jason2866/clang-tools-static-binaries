@@ -25,7 +25,7 @@ jobs:
           - clang-version: 20
             release: llvm-project-20.1.0.src
           - os: linux
-            runner: ubuntu-24.04
+            runner: ubuntu-22.04
             os-cmake-args: '-DLLVM_BUILD_STATIC=ON -DCMAKE_CXX_FLAGS="-s -flto" ${POSIX_CMAKE_ARGS} ${LINUX_CMAKE_ARGS}'
             build-args: '-j$(nproc)'
             bindir: '/build/bin'
@@ -210,7 +210,7 @@ jobs:
         os: [ linux, macosx, windows, macos-arm ]
         include:
           - os: linux
-            runner: ubuntu-24.04
+            runner: ubuntu-22.04
             arch: 'amd64'
           - os: macosx
             runner: macos-15-intel # Intel macOS runner test
