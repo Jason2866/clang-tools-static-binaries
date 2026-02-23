@@ -25,7 +25,7 @@ jobs:
           - clang-version: 21
             release: llvm-project-21.1.0.src
           - os: linux
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             os-cmake-args: '-DLLVM_BUILD_STATIC=ON -DCMAKE_CXX_FLAGS="-s -flto" ${POSIX_CMAKE_ARGS} ${LINUX_CMAKE_ARGS}'
             build-args: '-j$(nproc)'
             bindir: '/build/bin'
@@ -65,7 +65,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     env:
       COMMON_CMAKE_ARGS: '-DBUILD_SHARED_LIBS=OFF -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra"'
-      LINUX_CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_C_COMPILER=gcc-10'
+      LINUX_CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_C_COMPILER=gcc-12'
       MACOS_CMAKE_ARGS: '-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_CXX_COMPILER=g++-14 -DCMAKE_C_COMPILER=gcc-14 -DLLVM_ENABLE_ZSTD=OFF -DLLVM_ENABLE_ZLIB=OFF'
       POSIX_CMAKE_ARGS: '-DCMAKE_BUILD_TYPE=MinSizeRel'
       RELEASE: '${{ matrix.release }}'
@@ -219,7 +219,7 @@ jobs:
         os: [ linux, macosx, windows, macos-arm ]
         include:
           - os: linux
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             arch: 'amd64'
           - os: macosx
             runner: macos-15-intel # Intel macOS runner test
